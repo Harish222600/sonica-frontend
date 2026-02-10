@@ -92,8 +92,8 @@ const StockManagement = () => {
                     ))}
                 </div>
             ) : (
-                <div className="table-container">
-                    <table className="table">
+                <div className="table-container" style={{ overflowX: 'auto' }}>
+                    <table className="table table-responsive-stack" style={{ minWidth: '600px' }}>
                         <thead>
                             <tr>
                                 <th>Product</th>
@@ -113,7 +113,7 @@ const StockManagement = () => {
 
                                 return (
                                     <tr key={item._id}>
-                                        <td>
+                                        <td data-label="Product">
                                             <div className="flex items-center gap-md">
                                                 <img
                                                     src={item.product?.images?.[0] || 'https://via.placeholder.com/40'}
@@ -123,18 +123,18 @@ const StockManagement = () => {
                                                 <span style={{ fontWeight: 600 }}>{item.product?.name}</span>
                                             </div>
                                         </td>
-                                        <td>
+                                        <td data-label="Category">
                                             <span className="badge badge-secondary">{item.product?.category}</span>
                                         </td>
-                                        <td style={{ fontWeight: 600 }}>{item.totalStock}</td>
-                                        <td style={{ color: 'var(--warning-500)' }}>{item.reservedStock}</td>
-                                        <td style={{ fontWeight: 600, color: 'var(--success-600)' }}>{available}</td>
-                                        <td>
+                                        <td data-label="Total Stock" style={{ fontWeight: 600 }}>{item.totalStock}</td>
+                                        <td data-label="Reserved" style={{ color: 'var(--warning-500)' }}>{item.reservedStock}</td>
+                                        <td data-label="Available" style={{ fontWeight: 600, color: 'var(--success-600)' }}>{available}</td>
+                                        <td data-label="Status">
                                             <span className={`badge ${isOut ? 'badge-danger' : isLow ? 'badge-warning' : 'badge-success'}`}>
                                                 {isOut ? 'Out of Stock' : isLow ? 'Low Stock' : 'In Stock'}
                                             </span>
                                         </td>
-                                        <td>
+                                        <td data-label="Actions">
                                             <div className="flex gap-sm">
                                                 <button
                                                     className="btn btn-sm btn-primary"
@@ -162,7 +162,7 @@ const StockManagement = () => {
             {/* Modal */}
             {showModal && (
                 <div className="modal-overlay" onClick={() => setShowModal(false)}>
-                    <div className="modal" onClick={(e) => e.stopPropagation()}>
+                    <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '500px', width: '95%', margin: '0 auto' }}>
                         <div className="modal-header">
                             <h3>{modalType === 'add' ? 'Add Stock' : 'Remove Stock'}</h3>
                             <button className="btn btn-ghost btn-icon" onClick={() => setShowModal(false)}>

@@ -141,7 +141,7 @@ const ProductsPage = () => {
             {/* Filters - Expandable */}
             {showFilters && (
                 <div className="card fade-in hover-lift" style={{ marginBottom: 'var(--spacing-xl)' }}>
-                    <div className="grid grid-4" style={{ gap: 'var(--spacing-md)' }}>
+                    <div className="grid grid-4 grid-1-mobile" style={{ gap: 'var(--spacing-md)' }}>
                         <div className="form-group" style={{ margin: 0 }}>
                             <label className="form-label">Category</label>
                             <select
@@ -198,7 +198,7 @@ const ProductsPage = () => {
                         </div>
                     </div>
 
-                    <div className="flex gap-md" style={{ marginTop: 'var(--spacing-lg)' }}>
+                    <div className="flex gap-md flex-col-mobile" style={{ marginTop: 'var(--spacing-lg)' }}>
                         <button
                             type="button"
                             className="btn btn-primary btn-ripple"
@@ -263,7 +263,7 @@ const ProductsPage = () => {
 
             {/* Products Grid */}
             {loading ? (
-                <div className="grid grid-4">
+                <div className="grid grid-4 grid-1-mobile">
                     {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
                         <div key={i} className="card">
                             <div className="skeleton shimmer" style={{ aspectRatio: '1', marginBottom: 'var(--spacing-md)' }}></div>
@@ -274,12 +274,12 @@ const ProductsPage = () => {
                 </div>
             ) : products.length > 0 ? (
                 <>
-                    <div className={viewMode === 'grid' ? 'grid grid-4 stagger' : 'stagger'} style={{ gap: 'var(--spacing-lg)' }}>
+                    <div className={viewMode === 'grid' ? 'grid grid-4 grid-1-mobile stagger' : 'stagger'} style={{ gap: 'var(--spacing-lg)' }}>
                         {products.map((product) => (
                             <Link
                                 key={product._id}
                                 to={`/products/${product._id}`}
-                                className={`product-card-premium card hover-lift ${viewMode === 'list' ? 'flex items-center gap-lg' : ''}`}
+                                className={`product-card-premium card hover-lift ${viewMode === 'list' ? 'flex items-center gap-lg flex-col-mobile' : ''}`}
                                 onMouseEnter={() => setHoveredProduct(product._id)}
                                 onMouseLeave={() => setHoveredProduct(null)}
                                 style={viewMode === 'list' ? { flexDirection: 'row', marginBottom: 'var(--spacing-md)' } : {}}
@@ -407,7 +407,7 @@ const ProductsPage = () => {
 
                     {/* Pagination - Premium */}
                     {pagination.pages > 1 && (
-                        <div className="flex justify-center items-center gap-md" style={{ marginTop: 'var(--spacing-3xl)' }}>
+                        <div className="flex justify-center items-center gap-md flex-col-mobile" style={{ marginTop: 'var(--spacing-3xl)' }}>
                             <button
                                 className="btn btn-outline"
                                 disabled={pagination.page === 1}

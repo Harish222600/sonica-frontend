@@ -110,7 +110,7 @@ const DeliveryDetail = () => {
                 <FiArrowLeft /> Back to Deliveries
             </button>
 
-            <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-xl)' }}>
+            <div className="flex justify-between items-center flex-col-mobile items-start-mobile gap-md-mobile" style={{ marginBottom: 'var(--spacing-xl)' }}>
                 <div>
                     <h1>Order #{delivery.order?.orderNumber}</h1>
                     <span className={`badge ${delivery.status === 'delivered' ? 'badge-success' :
@@ -122,14 +122,14 @@ const DeliveryDetail = () => {
                 </div>
 
                 {nextStatus && (
-                    <div className="flex gap-sm">
+                    <div className="flex gap-sm w-full-mobile">
                         {delivery.status !== 'delivered' && (
-                            <button className="btn btn-secondary" onClick={openGoogleMaps}>
+                            <button className="btn btn-secondary flex-1-mobile" onClick={openGoogleMaps}>
                                 <FiMapPin /> Navigate
                             </button>
                         )}
                         <button
-                            className="btn btn-primary btn-lg"
+                            className="btn btn-primary btn-lg flex-1-mobile"
                             onClick={() => nextStatus.isConfirm ? setPodModalOpen(true) : updateStatus(nextStatus.status)}
                             disabled={updating}
                         >
@@ -146,7 +146,7 @@ const DeliveryDetail = () => {
             </div>
 
             {/* Address and Items (existing code) */}
-            <div className="grid grid-2" style={{ gap: 'var(--spacing-xl)' }}>
+            <div className="grid grid-2 grid-1-mobile" style={{ gap: 'var(--spacing-xl)' }}>
                 {/* Customer & Address */}
                 <div className="card">
                     <h3 style={{ marginBottom: 'var(--spacing-lg)' }}>
@@ -252,7 +252,7 @@ const DeliveryDetail = () => {
             {/* POD Modal */}
             {podModalOpen && (
                 <div className="modal-overlay" onClick={() => setPodModalOpen(false)}>
-                    <div className="modal" style={{ maxWidth: 500 }} onClick={(e) => e.stopPropagation()}>
+                    <div className="modal" style={{ maxWidth: 500, width: '95%', margin: '0 auto' }} onClick={(e) => e.stopPropagation()}>
                         <div className="modal-header">
                             <h3>Complete Delivery</h3>
                             <button className="btn btn-ghost btn-icon" onClick={() => setPodModalOpen(false)}>×</button>

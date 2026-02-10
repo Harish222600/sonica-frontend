@@ -262,7 +262,7 @@ const HomePage = () => {
                     </p>
                 </div>
 
-                <div className="grid stagger" style={{ gridTemplateColumns: `repeat(${Math.max(1, Math.min(categories.length, 6))}, 1fr)`, gap: 'var(--spacing-lg)' }}>
+                <div className="grid grid-3 grid-1-mobile stagger" style={{ gap: 'var(--spacing-lg)' }}>
                     {categories.length > 0 ? categories.map((cat) => {
                         const meta = categoryMeta[cat.name?.toLowerCase()] || defaultCategoryIcon;
                         const IconComponent = meta.icon;
@@ -312,7 +312,7 @@ const HomePage = () => {
                 </div>
 
                 {loading ? (
-                    <div className="grid grid-4">
+                    <div className="grid grid-4 grid-1-mobile">
                         {[1, 2, 3, 4].map(i => (
                             <div key={i} className="card">
                                 <div className="skeleton shimmer" style={{ aspectRatio: '1', marginBottom: 'var(--spacing-md)' }}></div>
@@ -322,7 +322,7 @@ const HomePage = () => {
                         ))}
                     </div>
                 ) : bestOffers.length > 0 ? (
-                    <div className="grid grid-4 stagger">
+                    <div className="grid grid-4 grid-1-mobile stagger">
                         {bestOffers.map((product) => (
                             <Link
                                 key={product._id}
@@ -414,7 +414,7 @@ const HomePage = () => {
                 </div>
 
                 {loading ? (
-                    <div className="grid grid-4">
+                    <div className="grid grid-4 grid-1-mobile">
                         {[1, 2, 3, 4].map(i => (
                             <div key={i} className="card">
                                 <div className="skeleton shimmer" style={{ aspectRatio: '1', marginBottom: 'var(--spacing-md)' }}></div>
@@ -424,7 +424,7 @@ const HomePage = () => {
                         ))}
                     </div>
                 ) : recentlyAdded.length > 0 ? (
-                    <div className="grid grid-4 stagger">
+                    <div className="grid grid-4 grid-1-mobile stagger">
                         {recentlyAdded.map((product) => (
                             <Link
                                 key={product._id}
@@ -526,7 +526,7 @@ const HomePage = () => {
                 padding: 'var(--spacing-3xl) 0'
             }}>
                 <div className="container">
-                    <div className="grid grid-3 stagger">
+                    <div className="grid grid-3 grid-1-mobile stagger">
                         {features.map((feature, i) => (
                             <div key={i} className="glass-premium hover-lift" style={{
                                 padding: 'var(--spacing-xl)',
@@ -556,7 +556,7 @@ const HomePage = () => {
 
             {/* Why Choose Us - Icons instead of emojis */}
             <section className="container" style={{ padding: 'var(--spacing-3xl) 0' }}>
-                <div className="grid grid-2" style={{ gap: 'var(--spacing-3xl)', alignItems: 'center' }}>
+                <div className="grid grid-2 grid-1-mobile" style={{ gap: 'var(--spacing-3xl)', alignItems: 'center' }}>
                     <div className="fade-in">
                         <span className="badge badge-primary" style={{ marginBottom: 'var(--spacing-md)' }}>
                             <FiAward /> Why Choose Us
@@ -570,7 +570,7 @@ const HomePage = () => {
                             craftsmanship to create bicycles that perform as beautifully as they look.
                         </p>
 
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-lg)' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-lg)' }} className="grid-1-mobile">
                             {whyChooseUs.map((item, i) => (
                                 <div key={i} className="flex items-center gap-md hover-scale" style={{ cursor: 'default' }}>
                                     <div style={{
@@ -691,7 +691,7 @@ const HomePage = () => {
                             Join thousands of happy cyclists who found their perfect ride with SS Square Industries.
                             Create your free account today and get exclusive deals!
                         </p>
-                        <div className="flex gap-md justify-center">
+                        <div className="flex gap-md justify-center flex-col-mobile">
                             <Link to="/register" className="btn btn-lg btn-3d" style={{
                                 background: 'white',
                                 color: 'var(--primary-600)',

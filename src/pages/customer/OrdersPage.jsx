@@ -105,7 +105,7 @@ const OrdersPage = () => {
                     onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
                     onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
                 >
-                    <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-md)' }}>
+                    <div className="flex justify-between items-center w-full-mobile flex-col-mobile items-start-mobile gap-sm-mobile" style={{ marginBottom: 'var(--spacing-md)' }}>
                         <div>
                             <p style={{ fontWeight: 600, color: 'var(--gray-900)' }}>
                                 Order #{order.orderNumber}
@@ -118,7 +118,7 @@ const OrdersPage = () => {
                                 })}
                             </p>
                         </div>
-                        <div className="flex items-center gap-md">
+                        <div className="flex items-center gap-md w-full-mobile justify-between-mobile">
                             <span className={`badge ${getStatusColor(order.status)}`}>
                                 {getStatusIcon(order.status)}
                                 <span style={{ marginLeft: 4 }}>
@@ -162,7 +162,7 @@ const OrdersPage = () => {
                         )}
                     </div>
 
-                    <div className="flex justify-between items-center" style={{
+                    <div className="flex justify-between items-center w-full-mobile flex-col-mobile gap-md-mobile items-start-mobile" style={{
                         paddingTop: 'var(--spacing-md)',
                         borderTop: '1px solid var(--gray-100)'
                     }}>
@@ -170,11 +170,11 @@ const OrdersPage = () => {
                             {order.items.length} item{order.items.length > 1 ? 's' : ''} • <span style={{ fontWeight: 700, color: 'var(--primary-600)' }}>₹{order.totalAmount.toLocaleString()}</span>
                         </span>
 
-                        <div className="flex gap-sm" onClick={(e) => e.stopPropagation()}>
-                            <InvoiceButton order={order} className="btn-sm btn-outline" />
+                        <div className="flex gap-sm w-full-mobile" onClick={(e) => e.stopPropagation()}>
+                            <InvoiceButton order={order} className="btn-sm btn-outline flex-1-mobile" />
                             {['delivered', 'completed'].includes(order.status) && (
                                 <button
-                                    className="btn btn-outline btn-sm flex items-center gap-xs"
+                                    className="btn btn-outline btn-sm flex items-center gap-xs flex-1-mobile justify-center"
                                     onClick={(e) => handleRateOrder(e, order)}
                                 >
                                     <FiStar /> Rate Order

@@ -66,7 +66,7 @@ const DeliveryDashboard = () => {
             </div>
 
             {/* Filters */}
-            <div className="flex gap-sm" style={{ marginBottom: 'var(--spacing-lg)' }}>
+            <div className="flex gap-sm flex-col-mobile overflow-x-auto-mobile" style={{ marginBottom: 'var(--spacing-lg)' }}>
                 {filters.map((f) => (
                     <button
                         key={f.key}
@@ -88,14 +88,14 @@ const DeliveryDashboard = () => {
                             className="card hover-card"
                             style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}
                         >
-                            <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-md)' }}>
+                            <div className="flex justify-between items-center w-full-mobile flex-col-mobile items-start-mobile gap-sm-mobile" style={{ marginBottom: 'var(--spacing-md)' }}>
                                 <div>
                                     <p style={{ fontWeight: 600, fontSize: '1.1rem' }}>Order #{delivery.order?.orderNumber}</p>
                                     <p style={{ fontSize: '0.85rem', color: 'var(--gray-500)' }}>
                                         {new Date(delivery.createdAt).toLocaleDateString()}
                                     </p>
                                 </div>
-                                <div className="flex items-center gap-md">
+                                <div className="flex items-center gap-md w-full-mobile justify-between-mobile">
                                     <span className={`badge ${getStatusBadge(delivery.status)}`}>
                                         {delivery.status.replace('_', ' ')}
                                     </span>

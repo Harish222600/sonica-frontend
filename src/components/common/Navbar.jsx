@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
-import { FiShoppingCart, FiUser, FiLogOut, FiMenu } from 'react-icons/fi';
+import { FiShoppingCart, FiUser, FiLogOut, FiMenu, FiX } from 'react-icons/fi';
 import { useState } from 'react';
 
 const Navbar = () => {
@@ -96,12 +96,99 @@ const Navbar = () => {
                     )}
 
                     <button
-                        className="btn btn-ghost btn-icon"
+                        className="btn btn-ghost btn-icon mobile-menu-toggle"
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        style={{ display: 'none' }}
+                        style={{ zIndex: 1100 }}
                     >
-                        <FiMenu size={20} />
+                        {mobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
                     </button>
+
+                    {/* Mobile Menu Overlay */}
+                    <div
+                        className={`mobile-menu-overlay ${mobileMenuOpen ? 'open' : ''}`}
+                        onClick={() => setMobileMenuOpen(false)}
+                    ></div>
+
+                    {/* Mobile Menu Sidebar */}
+                    <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
+                        <div className="mobile-menu-header">
+                            <span className="navbar-logo">
+                                <span>SS Square</span>
+                            </span>
+                        </div>
+
+                        <ul className="mobile-nav-list">
+                            {user?.role !== 'delivery_partner' && (
+                                <>
+                                    <li>
+                                        <Link to="/" className={`mobile-nav-link ${isActive('/') ? 'active' : ''}`}>
+                                            Home
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/products" className={`mobile-nav-link ${isActive('/products') ? 'active' : ''}`}>
+                                            Bicycles
+                                        </Link>
+                                    </li>
+                                </>
+                            )}
+
+                            {isAuthenticated && (
+                                <>
+                                    {user?.role === 'admin' && (
+                                        <li>
+                                            <Link to="/admin" className={`mobile-nav-link ${isActive('/admin') ? 'active' : ''}`}>
+                                                Admin Dashboard
+                                            </Link>
+                                        </li>
+                                    )}
+                                    {user?.role === 'inventory_manager' && (
+                                        <li>
+                                            <Link to="/inventory" className={`mobile-nav-link ${isActive('/inventory') ? 'active' : ''}`}>
+                                                Inventory Dashboard
+                                            </Link>
+                                        </li>
+                                    )}
+                                    {user?.role === 'delivery_partner' && (
+                                        <li>
+                                            <Link to="/delivery" className={`mobile-nav-link ${isActive('/delivery') ? 'active' : ''}`}>
+                                                Delivery Dashboard
+                                            </Link>
+                                        </li>
+                                    )}
+                                    {user?.role === 'customer' && (
+                                        <li>
+                                            <Link to="/orders" className={`mobile-nav-link ${isActive('/orders') ? 'active' : ''}`}>
+                                                My Orders
+                                            </Link>
+                                        </li>
+                                    )}
+                                </>
+                            )}
+                        </ul>
+
+                        {isAuthenticated ? (
+                            <div className="mobile-menu-footer">
+                                <div className="flex items-center gap-md mb-md">
+                                    <div className="avatar-placeholder">
+                                        <FiUser />
+                                    </div>
+                                    <div>
+                                        <div style={{ fontWeight: 600 }}>{user.name}</div>
+                                        <div style={{ fontSize: '0.8rem', color: 'var(--gray-500)' }}>{user.email}</div>
+                                    </div>
+                                </div>
+                                <button onClick={logout} className="btn btn-outline w-full justify-center">
+                                    <FiLogOut size={16} /> Logout
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="mobile-menu-footer flex-col gap-sm">
+                                <Link to="/login" className="btn btn-ghost w-full justify-center">Login</Link>
+                                <Link to="/register" className="btn btn-primary w-full justify-center">Sign Up</Link>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </nav>

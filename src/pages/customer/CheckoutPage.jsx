@@ -131,9 +131,9 @@ const CheckoutPage = () => {
                 ))}
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 360px', gap: 'var(--spacing-xl)' }}>
+            <div className="grid grid-3 grid-1-mobile" style={{ gap: 'var(--spacing-xl)' }}>
                 {/* Forms */}
-                <div>
+                <div style={{ gridColumn: 'span 2' }}>
                     {step === 1 && (
                         <div className="card fade-in">
                             <h3 style={{ marginBottom: 'var(--spacing-lg)' }}>
@@ -153,7 +153,7 @@ const CheckoutPage = () => {
                                     />
                                 </div>
 
-                                <div className="grid grid-2" style={{ gap: 'var(--spacing-md)' }}>
+                                <div className="grid grid-2 grid-1-mobile" style={{ gap: 'var(--spacing-md)' }}>
                                     <div className="form-group">
                                         <label className="form-label">City</label>
                                         <input
@@ -178,7 +178,7 @@ const CheckoutPage = () => {
                                     </div>
                                 </div>
 
-                                <div className="grid grid-2" style={{ gap: 'var(--spacing-md)' }}>
+                                <div className="grid grid-2 grid-1-mobile" style={{ gap: 'var(--spacing-md)' }}>
                                     <div className="form-group">
                                         <label className="form-label">PIN Code</label>
                                         <input
@@ -259,7 +259,7 @@ const CheckoutPage = () => {
                 </div>
 
                 {/* Order Summary */}
-                <div>
+                <div style={{ gridColumn: 'span 1' }}>
                     <div className="card" style={{ position: 'sticky', top: 100 }}>
                         <h3 style={{ marginBottom: 'var(--spacing-lg)' }}>Order Summary</h3>
 

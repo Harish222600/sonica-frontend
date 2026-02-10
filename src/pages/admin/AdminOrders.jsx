@@ -88,8 +88,8 @@ const AdminOrders = () => {
 
             {/* Filters */}
             <div className="card" style={{ marginBottom: 'var(--spacing-lg)' }}>
-                <div className="flex gap-md">
-                    <div style={{ position: 'relative', flex: 1, maxWidth: 300 }}>
+                <div className="flex gap-md flex-col-mobile">
+                    <div style={{ position: 'relative', flex: 1, minWidth: '200px' }}>
                         <FiSearch style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--gray-400)' }} />
                         <input
                             type="text"
@@ -97,11 +97,11 @@ const AdminOrders = () => {
                             placeholder="Search order #..."
                             value={filters.search}
                             onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-                            style={{ paddingLeft: 40 }}
+                            style={{ paddingLeft: 40, width: '100%' }}
                         />
                     </div>
                     <select
-                        className="form-input"
+                        className="form-input w-full-mobile"
                         style={{ width: 'auto' }}
                         value={filters.status}
                         onChange={(e) => setFilters({ ...filters, status: e.target.value })}
@@ -122,8 +122,8 @@ const AdminOrders = () => {
                     ))}
                 </div>
             ) : (
-                <div className="table-container">
-                    <table className="table">
+                <div className="table-container" style={{ overflowX: 'auto' }}>
+                    <table className="table table-responsive-stack" style={{ minWidth: '800px' }}>
                         <thead>
                             <tr>
                                 <th>Order #</th>
@@ -139,21 +139,21 @@ const AdminOrders = () => {
                         <tbody>
                             {orders.map((order) => (
                                 <tr key={order._id}>
-                                    <td style={{ fontWeight: 600 }}>{order.orderNumber}</td>
-                                    <td>
+                                    <td data-label="Order #" style={{ fontWeight: 600 }}>{order.orderNumber}</td>
+                                    <td data-label="Customer">
                                         <div>
                                             <p>{order.user?.name || 'Guest'}</p>
                                             <p style={{ fontSize: '0.85rem', color: 'var(--gray-500)' }}>{order.user?.email}</p>
                                         </div>
                                     </td>
-                                    <td>{order.items?.length || 0} items</td>
-                                    <td style={{ fontWeight: 600 }}>₹{order.totalAmount?.toLocaleString()}</td>
-                                    <td>
+                                    <td data-label="Items">{order.items?.length || 0} items</td>
+                                    <td data-label="Amount" style={{ fontWeight: 600 }}>₹{order.totalAmount?.toLocaleString()}</td>
+                                    <td data-label="Status">
                                         <span className={`badge ${getStatusBadge(order.status)}`}>
                                             {order.status}
                                         </span>
                                     </td>
-                                    <td>
+                                    <td data-label="Delivery">
                                         {order.delivery?.partner ? (
                                             <div style={{ fontSize: '0.9rem' }}>
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -165,10 +165,10 @@ const AdminOrders = () => {
                                             <span style={{ color: 'var(--gray-400)', fontSize: '0.85rem' }}>Unassigned</span>
                                         )}
                                     </td>
-                                    <td style={{ color: 'var(--gray-500)' }}>
+                                    <td data-label="Date" style={{ color: 'var(--gray-500)' }}>
                                         {new Date(order.createdAt).toLocaleDateString()}
                                     </td>
-                                    <td>
+                                    <td data-label="Actions">
                                         <div className="flex gap-sm">
                                             <button
                                                 className="btn btn-ghost btn-icon btn-sm"
@@ -204,16 +204,16 @@ const AdminOrders = () => {
             {/* Order Detail Modal */}
             {selectedOrder && (
                 <div className="modal-overlay" onClick={() => setSelectedOrder(null)}>
-                    <div className="modal" style={{ maxWidth: 700 }} onClick={(e) => e.stopPropagation()}>
+                    <div className="modal" style={{ maxWidth: '700px', width: '95%', margin: '0 auto' }} onClick={(e) => e.stopPropagation()}>
                         <div className="modal-header">
-                            <div className="flex gap-md items-center">
+                            <div className="flex gap-md items-center flex-col-mobile items-start-mobile">
                                 <h3>Order #{selectedOrder.orderNumber}</h3>
                                 <InvoiceButton order={selectedOrder} className="btn-sm btn-outline" />
                             </div>
                             <button className="btn btn-ghost btn-icon" onClick={() => setSelectedOrder(null)}>×</button>
                         </div>
                         <div className="modal-body">
-                            <div className="grid grid-2" style={{ gap: 'var(--spacing-lg)', marginBottom: 'var(--spacing-lg)' }}>
+                            <div className="grid grid-2 grid-1-mobile" style={{ gap: 'var(--spacing-lg)', marginBottom: 'var(--spacing-lg)' }}>
                                 <div>
                                     <h5>Customer</h5>
                                     <p>{selectedOrder.user?.name}</p>

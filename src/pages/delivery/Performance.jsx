@@ -58,7 +58,7 @@ const DeliveryPerformance = () => {
             </div>
 
             {/* Performance Metrics */}
-            <div className="grid grid-5" style={{ marginBottom: 'var(--spacing-xl)', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))' }}>
+            <div className="grid grid-5 grid-2-mobile" style={{ marginBottom: 'var(--spacing-xl)', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))' }}>
                 <div className="stat-card card">
                     <p className="stat-label">Total Earnings</p>
                     <p className="stat-value" style={{ color: 'var(--primary-500)' }}>₹{metrics?.totalEarnings || 0}</p>
@@ -91,7 +91,7 @@ const DeliveryPerformance = () => {
             </div>
 
             {/* Charts Section */}
-            <div className="grid grid-2" style={{ marginBottom: 'var(--spacing-xl)', gap: 'var(--spacing-lg)' }}>
+            <div className="grid grid-2 grid-1-mobile" style={{ marginBottom: 'var(--spacing-xl)', gap: 'var(--spacing-lg)' }}>
                 {/* Earnings History */}
                 <div className="card" style={{ height: 350 }}>
                     <h3 style={{ marginBottom: 'var(--spacing-lg)' }}>Weekly Earnings</h3>

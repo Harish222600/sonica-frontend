@@ -201,12 +201,12 @@ const OrderDetailPage = () => {
                 </div>
             )}
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 360px', gap: 'var(--spacing-xl)' }}>
+            <div className="grid grid-3 grid-1-mobile" style={{ gap: 'var(--spacing-xl)' }}>
                 {/* Order Items */}
-                <div className="card">
+                <div className="card" style={{ gridColumn: 'span 2' }}>
                     <h3 style={{ marginBottom: 'var(--spacing-lg)' }}>Order Items</h3>
                     {order.items.map((item, i) => (
-                        <div key={i} className="flex gap-md" style={{
+                        <div key={i} className="flex gap-md w-full-mobile flex-col-mobile items-start-mobile" style={{
                             padding: 'var(--spacing-md) 0',
                             borderBottom: i < order.items.length - 1 ? '1px solid var(--gray-100)' : 'none'
                         }}>
@@ -227,7 +227,7 @@ const OrderDetailPage = () => {
                 </div>
 
                 {/* Order Summary */}
-                <div>
+                <div style={{ gridColumn: 'span 1' }}>
                     <div className="card" style={{ marginBottom: 'var(--spacing-md)' }}>
                         <h4 style={{ marginBottom: 'var(--spacing-md)' }}>Shipping Address</h4>
                         <p>{order.shippingAddress?.street}</p>

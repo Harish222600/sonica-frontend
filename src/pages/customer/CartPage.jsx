@@ -39,24 +39,23 @@ const CartPage = () => {
         <div className="page container">
             <h1 style={{ marginBottom: 'var(--spacing-xl)' }}>Shopping Cart</h1>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 360px', gap: 'var(--spacing-xl)' }}>
+            <div className="grid grid-3 grid-1-mobile" style={{ gap: 'var(--spacing-xl)' }}>
                 {/* Cart Items */}
-                <div>
+                <div style={{ gridColumn: 'span 2' }}>
                     {cart.items.map((item) => (
-                        <div key={item.product._id} className="card" style={{
-                            display: 'grid',
-                            gridTemplateColumns: '100px 1fr auto',
-                            gap: 'var(--spacing-lg)',
-                            alignItems: 'center',
-                            marginBottom: 'var(--spacing-md)'
+                        <div key={item.product._id} className="card flex flex-col-mobile items-center gap-lg" style={{
+                            marginBottom: 'var(--spacing-md)',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center'
                         }}>
                             <img
                                 src={item.product.images?.[0] || 'https://via.placeholder.com/100x100?text=Bicycle'}
                                 alt={item.product.name}
-                                style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 'var(--radius-lg)' }}
+                                style={{ width: 100, height: 100, aspectRatio: '1', objectFit: 'cover', borderRadius: 'var(--radius-lg)' }}
                             />
 
-                            <div>
+                            <div style={{ flex: 1 }}>
                                 <Link to={`/products/${item.product._id}`} style={{ fontWeight: 600, color: 'var(--gray-900)' }}>
                                     {item.product.name}
                                 </Link>
@@ -68,7 +67,7 @@ const CartPage = () => {
                                 </p>
                             </div>
 
-                            <div className="flex items-center gap-md">
+                            <div className="flex items-center gap-md w-full-mobile justify-between-mobile">
                                 <div className="flex items-center" style={{ background: 'var(--gray-100)', borderRadius: 'var(--radius-lg)' }}>
                                     <button
                                         className="btn btn-ghost btn-icon btn-sm"
@@ -103,7 +102,7 @@ const CartPage = () => {
                 </div>
 
                 {/* Order Summary */}
-                <div>
+                <div style={{ gridColumn: 'span 1' }}>
                     <div className="card" style={{ position: 'sticky', top: 100 }}>
                         <h3 style={{ marginBottom: 'var(--spacing-lg)' }}>Order Summary</h3>
 

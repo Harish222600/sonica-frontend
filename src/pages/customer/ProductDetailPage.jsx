@@ -98,7 +98,7 @@ const ProductDetailPage = () => {
                 <FiArrowLeft /> Back to Products
             </Link>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-2xl)' }}>
+            <div className="grid grid-2 grid-1-mobile" style={{ gap: 'var(--spacing-2xl)' }}>
                 {/* Images */}
                 <div>
                     <div className="card" style={{ overflow: 'hidden', marginBottom: 'var(--spacing-md)' }}>
@@ -109,7 +109,7 @@ const ProductDetailPage = () => {
                         />
                     </div>
                     {product.images?.length > 1 && (
-                        <div className="flex gap-sm">
+                        <div className="flex gap-sm" style={{ overflowX: 'auto', paddingBottom: 'var(--spacing-sm)' }}>
                             {product.images.map((img, i) => (
                                 <button
                                     key={i}
@@ -121,7 +121,8 @@ const ProductDetailPage = () => {
                                         overflow: 'hidden',
                                         border: selectedImage === i ? '3px solid var(--primary-500)' : '3px solid transparent',
                                         cursor: 'pointer',
-                                        padding: 0
+                                        padding: 0,
+                                        flexShrink: 0
                                     }}
                                 >
                                     <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -179,7 +180,7 @@ const ProductDetailPage = () => {
                     {product.specifications && Object.keys(product.specifications).length > 0 && (
                         <div className="card" style={{ marginBottom: 'var(--spacing-lg)', background: 'var(--gray-50)' }}>
                             <h4 style={{ marginBottom: 'var(--spacing-md)' }}>Specifications</h4>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-sm)' }}>
+                            <div className="grid grid-2 grid-1-mobile" style={{ gap: 'var(--spacing-sm)' }}>
                                 {Object.entries(product.specifications).map(([key, value]) => (
                                     <div key={key} className="flex justify-between" style={{ padding: 'var(--spacing-sm) 0', borderBottom: '1px solid var(--gray-200)' }}>
                                         <span style={{ color: 'var(--gray-500)', textTransform: 'capitalize' }}>{key}</span>
@@ -202,8 +203,8 @@ const ProductDetailPage = () => {
                     </div>
 
                     {product.stock > 0 && (
-                        <div className="flex gap-md" style={{ marginBottom: 'var(--spacing-lg)' }}>
-                            <div className="flex items-center" style={{ background: 'var(--gray-100)', borderRadius: 'var(--radius-lg)' }}>
+                        <div className="flex gap-md flex-col-mobile" style={{ marginBottom: 'var(--spacing-lg)' }}>
+                            <div className="flex items-center justify-center" style={{ background: 'var(--gray-100)', borderRadius: 'var(--radius-lg)' }}>
                                 <button
                                     className="btn btn-ghost btn-icon"
                                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -239,7 +240,7 @@ const ProductDetailPage = () => {
                     )}
 
                     {/* Features */}
-                    <div className="grid grid-2" style={{ gap: 'var(--spacing-md)' }}>
+                    <div className="grid grid-2 grid-1-mobile" style={{ gap: 'var(--spacing-md)' }}>
                         <div className="flex items-center gap-md" style={{ padding: 'var(--spacing-md)', background: 'var(--gray-50)', borderRadius: 'var(--radius-lg)' }}>
                             <FiTruck size={24} style={{ color: 'var(--primary-500)' }} />
                             <div>
@@ -263,7 +264,7 @@ const ProductDetailPage = () => {
                 <h2 style={{ marginBottom: 'var(--spacing-xl)' }}>Customer Reviews</h2>
 
                 {reviews.length > 0 ? (
-                    <div className="grid grid-2" style={{ gap: 'var(--spacing-lg)' }}>
+                    <div className="grid grid-2 grid-1-mobile" style={{ gap: 'var(--spacing-lg)' }}>
                         {reviews.map((review) => (
                             <div key={review._id} className="card">
                                 <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-md)' }}>

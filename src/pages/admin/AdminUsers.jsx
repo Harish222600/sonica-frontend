@@ -77,7 +77,7 @@ const AdminUsers = () => {
 
     return (
         <div>
-            <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-xl)' }}>
+            <div className="flex justify-between items-center flex-col-mobile items-start-mobile gap-md-mobile" style={{ marginBottom: 'var(--spacing-xl)' }}>
                 <h1>Users</h1>
                 <button className="btn btn-primary" onClick={() => openModal()}>
                     <FiPlus /> Add User
@@ -86,8 +86,8 @@ const AdminUsers = () => {
 
             {/* Filters */}
             <div className="card" style={{ marginBottom: 'var(--spacing-lg)' }}>
-                <div className="flex gap-md">
-                    <div style={{ position: 'relative', flex: 1, maxWidth: 300 }}>
+                <div className="flex gap-md flex-col-mobile">
+                    <div style={{ position: 'relative', flex: 1, minWidth: '200px' }}>
                         <FiSearch style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--gray-400)' }} />
                         <input
                             type="text"
@@ -95,30 +95,32 @@ const AdminUsers = () => {
                             placeholder="Search users..."
                             value={filters.search}
                             onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-                            style={{ paddingLeft: 40 }}
+                            style={{ paddingLeft: 40, width: '100%' }}
                         />
                     </div>
-                    <select
-                        className="form-input"
-                        style={{ width: 'auto' }}
-                        value={filters.role}
-                        onChange={(e) => setFilters({ ...filters, role: e.target.value })}
-                    >
-                        <option value="">All Roles</option>
-                        {roles.map(r => (
-                            <option key={r} value={r}>{r.replace('_', ' ').toUpperCase()}</option>
-                        ))}
-                    </select>
-                    <select
-                        className="form-input"
-                        style={{ width: 'auto' }}
-                        value={filters.status}
-                        onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-                    >
-                        <option value="">All Status</option>
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                    </select>
+                    <div className="flex gap-md w-full-mobile flex-col-mobile">
+                        <select
+                            className="form-input w-full-mobile"
+                            style={{ width: 'auto' }}
+                            value={filters.role}
+                            onChange={(e) => setFilters({ ...filters, role: e.target.value })}
+                        >
+                            <option value="">All Roles</option>
+                            {roles.map(r => (
+                                <option key={r} value={r}>{r.replace('_', ' ').toUpperCase()}</option>
+                            ))}
+                        </select>
+                        <select
+                            className="form-input w-full-mobile"
+                            style={{ width: 'auto' }}
+                            value={filters.status}
+                            onChange={(e) => setFilters({ ...filters, status: e.target.value })}
+                        >
+                            <option value="">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -130,8 +132,8 @@ const AdminUsers = () => {
                     ))}
                 </div>
             ) : (
-                <div className="table-container">
-                    <table className="table">
+                <div className="table-container" style={{ overflowX: 'auto' }}>
+                    <table className="table table-responsive-stack" style={{ minWidth: '700px' }}>
                         <thead>
                             <tr>
                                 <th>User</th>
@@ -145,7 +147,7 @@ const AdminUsers = () => {
                         <tbody>
                             {users.map((user) => (
                                 <tr key={user._id}>
-                                    <td>
+                                    <td data-label="User">
                                         <div className="flex items-center gap-md">
                                             <div style={{
                                                 width: 40,
@@ -166,7 +168,7 @@ const AdminUsers = () => {
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
+                                    <td data-label="Role">
                                         <span className={`badge ${user.role === 'admin' ? 'badge-primary' :
                                             user.role === 'inventory_manager' ? 'badge-warning' :
                                                 user.role === 'delivery_partner' ? 'badge-success' : 'badge-secondary'
@@ -174,16 +176,16 @@ const AdminUsers = () => {
                                             {user.role.replace('_', ' ')}
                                         </span>
                                     </td>
-                                    <td>{user.phone || '-'}</td>
-                                    <td>
+                                    <td data-label="Phone">{user.phone || '-'}</td>
+                                    <td data-label="Status">
                                         <span className={`badge ${user.isActive ? 'badge-success' : 'badge-danger'}`}>
                                             {user.isActive ? 'Active' : 'Inactive'}
                                         </span>
                                     </td>
-                                    <td style={{ color: 'var(--gray-500)' }}>
+                                    <td data-label="Joined" style={{ color: 'var(--gray-500)' }}>
                                         {new Date(user.createdAt).toLocaleDateString()}
                                     </td>
-                                    <td>
+                                    <td data-label="Actions">
                                         <div className="flex gap-sm">
                                             <button className="btn btn-ghost btn-icon btn-sm" onClick={() => openModal(user)}>
                                                 <FiEdit2 />

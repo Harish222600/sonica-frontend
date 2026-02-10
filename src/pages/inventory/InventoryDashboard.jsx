@@ -58,7 +58,7 @@ const InventoryDashboard = () => {
             <h1 style={{ marginBottom: 'var(--spacing-xl)' }}>Inventory Dashboard</h1>
 
             {/* Stats */}
-            <div className="grid grid-5" style={{ marginBottom: 'var(--spacing-xl)', gridTemplateColumns: 'repeat(5, 1fr)', gap: 'var(--spacing-md)' }}>
+            <div className="grid grid-5 grid-2-mobile" style={{ marginBottom: 'var(--spacing-xl)', gap: 'var(--spacing-md)' }}>
                 {stats.map((stat) => (
                     <div key={stat.label} className="stat-card card">
                         <div className="flex justify-between items-start">
@@ -84,7 +84,7 @@ const InventoryDashboard = () => {
             </div>
 
             {/* Charts Row 1 */}
-            <div className="grid grid-2" style={{ marginBottom: 'var(--spacing-xl)', gap: 'var(--spacing-lg)' }}>
+            <div className="grid grid-2 grid-1-mobile" style={{ marginBottom: 'var(--spacing-xl)', gap: 'var(--spacing-lg)' }}>
                 {/* Stock Trend */}
                 <div className="card" style={{ height: 400 }}>
                     <h3 style={{ marginBottom: 'var(--spacing-lg)' }}>Stock Value Trend (Last 7 Days)</h3>
@@ -137,8 +137,8 @@ const InventoryDashboard = () => {
                 </div>
 
                 {lowStock.length > 0 ? (
-                    <div className="table-container">
-                        <table className="table">
+                    <div className="table-container" style={{ overflowX: 'auto' }}>
+                        <table className="table" style={{ minWidth: '600px' }}>
                             <thead>
                                 <tr>
                                     <th>Product</th>

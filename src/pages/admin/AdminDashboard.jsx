@@ -54,7 +54,7 @@ const AdminDashboard = () => {
 
     return (
         <div style={{ paddingBottom: 'var(--spacing-2xl)' }}>
-            <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-xl)' }}>
+            <div className="flex justify-between items-center flex-col-mobile items-start-mobile gap-md-mobile" style={{ marginBottom: 'var(--spacing-xl)' }}>
                 <div>
                     <h1>Command Center</h1>
                     <p style={{ color: 'var(--gray-500)' }}>Real-time overview of your business performance.</p>
@@ -65,7 +65,7 @@ const AdminDashboard = () => {
             </div>
 
             {/* Key Metrics Grid */}
-            <div className="grid grid-6" style={{ marginBottom: 'var(--spacing-xl)', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
+            <div className="grid grid-6 grid-2-mobile" style={{ marginBottom: 'var(--spacing-xl)', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
                 {stats.map((stat) => (
                     <div key={stat.label} className="stat-card card">
                         <div className="flex justify-between items-start">
@@ -89,7 +89,7 @@ const AdminDashboard = () => {
             </div>
 
             {/* Main Charts Row */}
-            <div className="grid grid-2" style={{ marginBottom: 'var(--spacing-xl)', gap: 'var(--spacing-lg)' }}>
+            <div className="grid grid-2 grid-1-mobile" style={{ marginBottom: 'var(--spacing-xl)', gap: 'var(--spacing-lg)' }}>
                 {/* Revenue Trend */}
                 <div className="card" style={{ height: 400 }}>
                     <h3 style={{ marginBottom: 'var(--spacing-lg)' }}>Revenue & Profit Trend (7 Days)</h3>
@@ -127,7 +127,7 @@ const AdminDashboard = () => {
             </div>
 
             {/* Secondary Charts Row */}
-            <div className="grid grid-3" style={{ marginBottom: 'var(--spacing-xl)', gap: 'var(--spacing-lg)' }}>
+            <div className="grid grid-3 grid-1-mobile" style={{ marginBottom: 'var(--spacing-xl)', gap: 'var(--spacing-lg)' }}>
                 {/* Customer Acquisition */}
                 <div className="card" style={{ height: 300, gridColumn: 'span 2' }}>
                     <h3 style={{ marginBottom: 'var(--spacing-lg)' }}>Customer Growth</h3>
@@ -178,8 +178,8 @@ const AdminDashboard = () => {
                     <Link to="/admin/orders" className="btn btn-ghost btn-sm">View All Orders</Link>
                 </div>
 
-                <div className="table-container">
-                    <table className="table">
+                <div className="table-container" style={{ overflowX: 'auto' }}>
+                    <table className="table" style={{ minWidth: '600px' }}>
                         <thead>
                             <tr>
                                 <th>Order ID</th>
@@ -197,7 +197,7 @@ const AdminDashboard = () => {
                                     <td>₹{order.totalAmount?.toLocaleString()}</td>
                                     <td>
                                         <span className={`badge ${order.status === 'delivered' ? 'badge-success' :
-                                                order.status === 'cancelled' ? 'badge-danger' : 'badge-warning'
+                                            order.status === 'cancelled' ? 'badge-danger' : 'badge-warning'
                                             }`}>
                                             {order.status}
                                         </span>

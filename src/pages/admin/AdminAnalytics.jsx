@@ -54,7 +54,7 @@ const AdminAnalytics = () => {
             <h1 style={{ marginBottom: 'var(--spacing-xl)' }}>Analytics</h1>
 
             {/* Tabs */}
-            <div className="flex gap-sm" style={{ marginBottom: 'var(--spacing-xl)' }}>
+            <div className="flex gap-sm flex-col-mobile overflow-x-auto-mobile" style={{ marginBottom: 'var(--spacing-xl)' }}>
                 {tabs.map((tab) => (
                     <button
                         key={tab.key}
@@ -77,7 +77,7 @@ const AdminAnalytics = () => {
                     {/* Sales Tab */}
                     {activeTab === 'sales' && salesData && (
                         <div className="fade-in">
-                            <div className="grid grid-4" style={{ marginBottom: 'var(--spacing-xl)' }}>
+                            <div className="grid grid-4 grid-2-mobile" style={{ marginBottom: 'var(--spacing-xl)' }}>
                                 <div className="stat-card card">
                                     <p className="stat-label">Total Orders</p>
                                     <p className="stat-value">{salesData.totalOrders}</p>
@@ -96,7 +96,7 @@ const AdminAnalytics = () => {
                                 </div>
                             </div>
 
-                            <div className="grid grid-2" style={{ gap: 'var(--spacing-xl)' }}>
+                            <div className="grid grid-2 grid-1-mobile" style={{ gap: 'var(--spacing-xl)' }}>
                                 <div className="card">
                                     <h3 style={{ marginBottom: 'var(--spacing-lg)' }}>Top Selling Products</h3>
                                     {salesData.topProducts?.length > 0 ? (
@@ -159,7 +159,7 @@ const AdminAnalytics = () => {
                     {/* Users Tab */}
                     {activeTab === 'users' && usersData && (
                         <div className="fade-in">
-                            <div className="grid grid-4" style={{ marginBottom: 'var(--spacing-xl)' }}>
+                            <div className="grid grid-4 grid-2-mobile" style={{ marginBottom: 'var(--spacing-xl)' }}>
                                 <div className="stat-card card">
                                     <p className="stat-label">Total Users</p>
                                     <p className="stat-value">{usersData.totalUsers}</p>
@@ -180,7 +180,7 @@ const AdminAnalytics = () => {
 
                             <div className="card">
                                 <h3 style={{ marginBottom: 'var(--spacing-lg)' }}>Users by Role</h3>
-                                <div className="grid grid-4">
+                                <div className="grid grid-4 grid-2-mobile">
                                     {Object.entries(usersData.usersByRole || {}).map(([role, count]) => (
                                         <div key={role} style={{
                                             padding: 'var(--spacing-lg)',
@@ -200,7 +200,7 @@ const AdminAnalytics = () => {
                     {/* Inventory Tab */}
                     {activeTab === 'inventory' && inventoryData && (
                         <div className="fade-in">
-                            <div className="grid grid-4" style={{ marginBottom: 'var(--spacing-xl)' }}>
+                            <div className="grid grid-4 grid-2-mobile" style={{ marginBottom: 'var(--spacing-xl)' }}>
                                 <div className="stat-card card">
                                     <p className="stat-label">Total Products</p>
                                     <p className="stat-value">{inventoryData.totalProducts}</p>
@@ -222,7 +222,7 @@ const AdminAnalytics = () => {
                             <div className="card">
                                 <h3 style={{ marginBottom: 'var(--spacing-lg)' }}>Stock by Category</h3>
                                 {Object.keys(inventoryData.categoryBreakdown || {}).length > 0 ? (
-                                    <div className="grid grid-3">
+                                    <div className="grid grid-3 grid-1-mobile">
                                         {Object.entries(inventoryData.categoryBreakdown).map(([category, data]) => (
                                             <div key={category} style={{
                                                 padding: 'var(--spacing-lg)',
@@ -246,7 +246,7 @@ const AdminAnalytics = () => {
                     {/* Delivery Tab */}
                     {activeTab === 'delivery' && deliveryData && (
                         <div className="fade-in">
-                            <div className="grid grid-4" style={{ marginBottom: 'var(--spacing-xl)' }}>
+                            <div className="grid grid-4 grid-2-mobile" style={{ marginBottom: 'var(--spacing-xl)' }}>
                                 <div className="stat-card card">
                                     <p className="stat-label">Total Deliveries</p>
                                     <p className="stat-value">{deliveryData.totalDeliveries}</p>
@@ -268,8 +268,8 @@ const AdminAnalytics = () => {
                             <div className="card">
                                 <h3 style={{ marginBottom: 'var(--spacing-lg)' }}>Delivery Partner Performance</h3>
                                 {deliveryData.partnerPerformance?.length > 0 ? (
-                                    <div className="table-container">
-                                        <table className="table">
+                                    <div className="table-container" style={{ overflowX: 'auto' }}>
+                                        <table className="table" style={{ minWidth: '600px' }}>
                                             <thead>
                                                 <tr>
                                                     <th>Partner</th>

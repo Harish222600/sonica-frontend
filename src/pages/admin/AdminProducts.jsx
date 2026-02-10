@@ -143,8 +143,8 @@ const AdminProducts = () => {
                     ))}
                 </div>
             ) : (
-                <div className="table-container">
-                    <table className="table">
+                <div className="table-container" style={{ overflowX: 'auto' }}>
+                    <table className="table table-responsive-stack" style={{ minWidth: '600px' }}>
                         <thead>
                             <tr>
                                 <th>Product</th>
@@ -157,7 +157,7 @@ const AdminProducts = () => {
                         <tbody>
                             {products.map((product) => (
                                 <tr key={product._id}>
-                                    <td>
+                                    <td data-label="Product">
                                         <div className="flex items-center gap-md">
                                             <img
                                                 src={product.images?.[0] || 'https://via.placeholder.com/50x50'}
@@ -172,10 +172,10 @@ const AdminProducts = () => {
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
+                                    <td data-label="Category">
                                         <span className="badge badge-secondary">{product.category}</span>
                                     </td>
-                                    <td>
+                                    <td data-label="Price">
                                         <div>
                                             <p style={{ fontWeight: 600 }}>₹{(product.discountPrice || product.price).toLocaleString()}</p>
                                             {product.discountPrice > 0 && product.discountPrice < product.price && (
@@ -185,12 +185,12 @@ const AdminProducts = () => {
                                             )}
                                         </div>
                                     </td>
-                                    <td>
+                                    <td data-label="Stock">
                                         <span className={`badge ${product.stock === 0 ? 'badge-danger' : product.stock < 10 ? 'badge-warning' : 'badge-success'}`}>
                                             {product.stock} units
                                         </span>
                                     </td>
-                                    <td>
+                                    <td data-label="Actions">
                                         <div className="flex gap-sm">
                                             <button className="btn btn-ghost btn-icon btn-sm" onClick={() => openModal(product)}>
                                                 <FiEdit2 />
@@ -214,7 +214,7 @@ const AdminProducts = () => {
             {/* Modal */}
             {showModal && (
                 <div className="modal-overlay" onClick={() => setShowModal(false)}>
-                    <div className="modal" style={{ maxWidth: 600 }} onClick={(e) => e.stopPropagation()}>
+                    <div className="modal" style={{ maxWidth: '600px', width: '95%', margin: '0 auto' }} onClick={(e) => e.stopPropagation()}>
                         <div className="modal-header">
                             <h3>{editingProduct ? 'Edit Product' : 'Add Product'}</h3>
                             <button className="btn btn-ghost btn-icon" onClick={() => setShowModal(false)}>
@@ -245,7 +245,7 @@ const AdminProducts = () => {
                                     />
                                 </div>
 
-                                <div className="grid grid-2" style={{ gap: 'var(--spacing-md)' }}>
+                                <div className="grid grid-2 grid-1-mobile" style={{ gap: 'var(--spacing-md)' }}>
                                     <div className="form-group">
                                         <label className="form-label">Category</label>
                                         <select
@@ -271,7 +271,7 @@ const AdminProducts = () => {
                                     </div>
                                 </div>
 
-                                <div className="grid grid-2" style={{ gap: 'var(--spacing-md)' }}>
+                                <div className="grid grid-2 grid-1-mobile" style={{ gap: 'var(--spacing-md)' }}>
                                     <div className="form-group">
                                         <label className="form-label">Price (₹)</label>
                                         <input
