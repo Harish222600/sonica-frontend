@@ -106,7 +106,12 @@ const HomePage = () => {
         .slice(0, 4);
 
     // Compute Recently Added: top 4 newest products by createdAt
+    // Get IDs of products in Best Offers to exclude them
+    const bestOfferIds = new Set(bestOffers.map(p => p._id));
+
+    // Compute Recently Added: top 4 newest products by createdAt, excluding Best Offers
     const recentlyAdded = [...allProducts]
+        .filter(p => !bestOfferIds.has(p._id))
         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
         .slice(0, 4);
 
