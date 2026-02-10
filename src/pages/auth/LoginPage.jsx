@@ -22,18 +22,11 @@ const LoginPage = () => {
             const user = await login(email, password);
 
             // Redirect based on role
-            switch (user.role) {
-                case 'admin':
-                    navigate('/admin');
-                    break;
-                case 'inventory_manager':
-                    navigate('/inventory');
-                    break;
-                case 'delivery_partner':
-                    navigate('/delivery');
-                    break;
-                default:
-                    navigate('/');
+            if (user.role === 'delivery_partner') {
+                navigate('/delivery');
+            } else {
+                // Admin, Inventory Manager, and Customer all go to Home
+                navigate('/');
             }
         } catch (err) {
             setError(err.response?.data?.message || 'Login failed. Please try again.');
@@ -54,7 +47,7 @@ const LoginPage = () => {
             <div className="card" style={{ maxWidth: 420, width: '100%' }}>
                 <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-xl)' }}>
                     <Link to="/" style={{ fontSize: '2rem', fontWeight: 800 }}>
-                        🚴 <span style={{ color: 'var(--primary-500)' }}>Sonica</span>
+                        🚴 <span style={{ color: 'var(--primary-500)' }}>SS Square</span>
                     </Link>
                     <h2 style={{ marginTop: 'var(--spacing-md)' }}>Welcome Back</h2>
                     <p style={{ color: 'var(--gray-500)' }}>Sign in to your account</p>

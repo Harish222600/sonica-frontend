@@ -55,7 +55,7 @@ const CheckoutPage = () => {
                 key: import.meta.env.VITE_RAZORPAY_KEY_ID,
                 amount: razorpayOrder.amount,
                 currency: razorpayOrder.currency,
-                name: 'Sonica Bicycles',
+                name: 'SS Square Industries',
                 description: `Order #${order.orderNumber}`,
                 order_id: razorpayOrder.orderId,
                 handler: async (response) => {

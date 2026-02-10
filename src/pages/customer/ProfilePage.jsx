@@ -3,14 +3,48 @@ import { useAuth } from '../../context/AuthContext';
 import { FiUser, FiMail, FiPhone, FiSave, FiCheck } from 'react-icons/fi';
 
 const ProfilePage = () => {
-    const { user, updateProfile } = useAuth();
+    const { user, updateProfile, uploadAvatar } = useAuth();
     const [formData, setFormData] = useState({
         name: user?.name || '',
         phone: user?.phone || ''
     });
     const [loading, setLoading] = useState(false);
+    const [uploading, setUploading] = useState(false);
     const [saved, setSaved] = useState(false);
     const [error, setError] = useState('');
+
+    const handleFileChange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // Validate file type
+        if (!file.type.startsWith('image/')) {
+            setError('Please upload an image file (JPEG, PNG, etc.)');
+            return;
+        }
+
+        // Validate file size (5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            setError('Image size should be less than 5MB');
+            return;
+        }
+
+        const data = new FormData();
+        data.append('avatar', file);
+
+        setUploading(true);
+        setError('');
+
+        try {
+            await uploadAvatar(data);
+            setSaved(true);
+            setTimeout(() => setSaved(false), 3000);
+        } catch (err) {
+            setError(err.response?.data?.message || 'Failed to upload avatar');
+        } finally {
+            setUploading(false);
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,20 +70,63 @@ const ProfilePage = () => {
                 <div className="card">
                     {/* Avatar */}
                     <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-xl)' }}>
-                        <div style={{
-                            width: 100,
-                            height: 100,
-                            borderRadius: 'var(--radius-full)',
-                            background: 'linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%)',
-                            color: 'white',
-                            fontSize: '2.5rem',
-                            fontWeight: 700,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            margin: '0 auto var(--spacing-md)'
-                        }}>
-                            {user?.name?.charAt(0).toUpperCase()}
+                        <div style={{ position: 'relative', display: 'inline-block' }}>
+                            <div
+                                style={{
+                                    width: 100,
+                                    height: 100,
+                                    borderRadius: 'var(--radius-full)',
+                                    background: user?.avatar ? `url(${user.avatar}) center/cover` : 'linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%)',
+                                    color: 'white',
+                                    fontSize: '2.5rem',
+                                    fontWeight: 700,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    margin: '0 auto var(--spacing-md)',
+                                    cursor: 'pointer',
+                                    position: 'relative',
+                                    overflow: 'hidden'
+                                }}
+                                onClick={() => document.getElementById('avatar-upload').click()}
+                            >
+                                {!user?.avatar && user?.name?.charAt(0).toUpperCase()}
+                                {uploading && (
+                                    <div style={{
+                                        position: 'absolute',
+                                        inset: 0,
+                                        background: 'rgba(0,0,0,0.5)',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}>
+                                        <div className="spinner" style={{ width: 24, height: 24, borderWidth: 2 }}></div>
+                                    </div>
+                                )}
+                            </div>
+                            <input
+                                type="file"
+                                id="avatar-upload"
+                                style={{ display: 'none' }}
+                                accept="image/*"
+                                onChange={handleFileChange}
+                                disabled={uploading}
+                            />
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    bottom: 16,
+                                    right: 0,
+                                    background: 'var(--white)',
+                                    borderRadius: '50%',
+                                    padding: 6,
+                                    boxShadow: 'var(--shadow-md)',
+                                    cursor: 'pointer'
+                                }}
+                                onClick={() => document.getElementById('avatar-upload').click()}
+                            >
+                                <FiUser style={{ color: 'var(--primary-600)' }} />
+                            </div>
                         </div>
                         <h3>{user?.name}</h3>
                         <p style={{ color: 'var(--gray-500)' }}>{user?.email}</p>

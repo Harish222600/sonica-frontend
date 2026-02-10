@@ -30,7 +30,15 @@ const ProductsPage = () => {
         { slug: 'accessories', icon: '🎒', label: 'Accessories' }
     ];
 
+    // Sync local filters state with URL search params
     useEffect(() => {
+        setFilters({
+            search: searchParams.get('search') || '',
+            category: searchParams.get('category') || '',
+            minPrice: searchParams.get('minPrice') || '',
+            maxPrice: searchParams.get('maxPrice') || '',
+            sort: searchParams.get('sort') || '-createdAt'
+        });
         fetchProducts();
     }, [searchParams]);
 

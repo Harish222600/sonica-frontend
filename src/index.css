@@ -1,5 +1,5 @@
 /* ================================================
-   SONICA BICYCLES - DESIGN SYSTEM
+   SS SQUARE INDUSTRIES - DESIGN SYSTEM
    Premium E-Commerce Platform
    ================================================ */
 
@@ -693,9 +693,9 @@ a:hover {
   font-size: 1.5rem;
   font-weight: 800;
   color: white;
-  padding-bottom: var(--spacing-lg);
-  border-bottom: 1px solid var(--dark-border);
-  margin-bottom: var(--spacing-lg);
+  overflow: hidden;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .sidebar-logo span {
@@ -1874,4 +1874,328 @@ input,
 button:focus-visible,
 a:focus-visible {
   box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.3);
+}
+
+/* ==================== HERO SLIDESHOW ==================== */
+.hero-slideshow-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-slideshow {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), 0 0 80px rgba(249, 115, 22, 0.15);
+}
+
+.hero-slideshow-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hero-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-slide-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--spacing-xl) var(--spacing-lg);
+  background: linear-gradient(transparent 0%, rgba(0, 0, 0, 0.85) 100%);
+}
+
+.hero-slide-category {
+  display: inline-block;
+  background: rgba(249, 115, 22, 0.9);
+  color: white;
+  padding: 2px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  margin-bottom: var(--spacing-xs);
+  letter-spacing: 0.5px;
+}
+
+.hero-slide-name {
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-xs);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.hero-slide-price {
+  color: var(--primary-300);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.hero-slide-original-price {
+  color: var(--gray-400);
+  text-decoration: line-through;
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-left: var(--spacing-sm);
+}
+
+/* Slideshow arrows */
+.hero-slide-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0;
+}
+
+.hero-slideshow:hover .hero-slide-arrow {
+  opacity: 1;
+}
+
+.hero-slide-arrow:hover {
+  background: rgba(249, 115, 22, 0.8);
+  border-color: var(--primary-500);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.hero-slide-arrow-left {
+  left: 12px;
+}
+
+.hero-slide-arrow-right {
+  right: 12px;
+}
+
+/* Slideshow dot indicators */
+.hero-slide-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.hero-slide-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.hero-slide-dot.active {
+  background: var(--primary-500);
+  width: 24px;
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(249, 115, 22, 0.5);
+}
+
+.hero-slide-dot:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* ==================== COLLAPSIBLE SIDEBAR ==================== */
+.sidebar {
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  white-space: nowrap;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+  padding: var(--spacing-lg) var(--spacing-sm);
+}
+
+/* Smooth fade for text elements instead of display:none */
+.sidebar .sidebar-logo span,
+.sidebar .sidebar-link span,
+.sidebar .user-info,
+.sidebar .logout-btn span {
+  opacity: 1;
+  transition: opacity 0.15s ease 0.1s;
+  pointer-events: auto;
+}
+
+.sidebar.collapsed .sidebar-logo span,
+.sidebar.collapsed .sidebar-link span,
+.sidebar.collapsed .user-info,
+.sidebar.collapsed .logout-btn span {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.1s ease;
+  width: 0;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--dark-border);
+  padding-bottom: var(--spacing-md);
+  min-height: 50px;
+  overflow: hidden;
+}
+
+.sidebar.collapsed .sidebar-header {
+  justify-content: center;
+}
+
+.sidebar.collapsed .sidebar-logo {
+  display: none;
+}
+
+.sidebar-toggle {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: var(--radius-md);
+  color: var(--gray-400);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.sidebar-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white !important;
+}
+
+/* Collapsed sidebar: center links and icons */
+.sidebar.collapsed .sidebar-link {
+  justify-content: center;
+  padding: var(--spacing-md) var(--spacing-sm);
+}
+
+.sidebar.collapsed .sidebar-link svg {
+  flex-shrink: 0;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--dark-border);
+}
+
+/* Collapsed sidebar: center profile and logout */
+.sidebar.collapsed .user-profile-link {
+  justify-content: center;
+  padding: var(--spacing-sm) 0;
+}
+
+.sidebar.collapsed .logout-btn {
+  justify-content: center;
+  padding: var(--spacing-md) var(--spacing-sm) !important;
+}
+
+.user-profile-link {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-sm);
+  text-decoration: none;
+  color: inherit;
+  border-radius: var(--radius-lg);
+  transition: background 0.15s ease;
+  overflow: hidden;
+}
+
+.user-profile-link:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.sidebar.collapsed .user-avatar {
+  width: 36px;
+  height: 36px;
+}
+
+.user-info {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.user-name {
+  font-weight: 600;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.user-role {
+  font-size: 0.75rem;
+  color: var(--gray-400);
+}
+
+/* Smooth transition for main content area */
+.main-with-sidebar {
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }

@@ -65,7 +65,7 @@ const RegisterPage = () => {
             <div className="card" style={{ maxWidth: 420, width: '100%' }}>
                 <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-xl)' }}>
                     <Link to="/" style={{ fontSize: '2rem', fontWeight: 800 }}>
-                        🚴 <span style={{ color: 'var(--primary-500)' }}>Sonica</span>
+                        🚴 <span style={{ color: 'var(--primary-500)' }}>SS Square</span>
                     </Link>
                     <h2 style={{ marginTop: 'var(--spacing-md)' }}>Create Account</h2>
                     <p style={{ color: 'var(--gray-500)' }}>Join us and start your cycling journey</p>

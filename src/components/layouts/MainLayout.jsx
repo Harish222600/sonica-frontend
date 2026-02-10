@@ -1,79 +1,11 @@
-import { Outlet, Link, useLocation } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import { useCart } from '../../context/CartContext';
-import { FiShoppingCart, FiUser, FiLogOut, FiMenu } from 'react-icons/fi';
-import { useState } from 'react';
+import { Outlet, Link } from 'react-router-dom';
+import Navbar from '../common/Navbar';
 
 const MainLayout = () => {
-    const { user, logout, isAuthenticated } = useAuth();
-    const { itemCount } = useCart();
-    const location = useLocation();
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-    const isActive = (path) => location.pathname === path;
-
     return (
         <div>
             {/* Navigation */}
-            <nav className="navbar">
-                <div className="container navbar-content">
-                    <Link to="/" className="navbar-logo">
-                        🚴 <span>Sonica</span>
-                    </Link>
-
-                    <ul className="navbar-nav">
-                        <li>
-                            <Link to="/" className={`navbar-link ${isActive('/') ? 'active' : ''}`}>
-                                Home
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/products" className={`navbar-link ${isActive('/products') ? 'active' : ''}`}>
-                                Bicycles
-                            </Link>
-                        </li>
-                        {isAuthenticated && (
-                            <li>
-                                <Link to="/orders" className={`navbar-link ${isActive('/orders') ? 'active' : ''}`}>
-                                    My Orders
-                                </Link>
-                            </li>
-                        )}
-                    </ul>
-
-                    <div className="navbar-actions">
-                        {isAuthenticated ? (
-                            <>
-                                <Link to="/cart" className="btn btn-ghost btn-icon cart-icon">
-                                    <FiShoppingCart size={20} />
-                                    {itemCount > 0 && <span className="cart-badge">{itemCount}</span>}
-                                </Link>
-
-                                <Link to="/profile" className="btn btn-ghost btn-icon">
-                                    <FiUser size={20} />
-                                </Link>
-
-                                <button onClick={logout} className="btn btn-ghost btn-icon">
-                                    <FiLogOut size={20} />
-                                </button>
-                            </>
-                        ) : (
-                            <>
-                                <Link to="/login" className="btn btn-ghost">Login</Link>
-                                <Link to="/register" className="btn btn-primary">Sign Up</Link>
-                            </>
-                        )}
-
-                        <button
-                            className="btn btn-ghost btn-icon"
-                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            style={{ display: 'none' }}
-                        >
-                            <FiMenu size={20} />
-                        </button>
-                    </div>
-                </div>
-            </nav>
+            <Navbar />
 
             {/* Main Content */}
             <main>
@@ -91,9 +23,10 @@ const MainLayout = () => {
                     <div className="grid grid-4" style={{ marginBottom: 'var(--spacing-xl)' }}>
                         <div>
                             <h4 style={{ color: 'white', marginBottom: 'var(--spacing-md)' }}>
-                                🚴 Sonica Bicycles
+                                🚴 SS Square Industries
                             </h4>
-                            <p>Premium bicycles for every adventure. Quality, performance, and style.</p>
+                            <p style={{ marginBottom: 'var(--spacing-sm)' }}>Premium bicycles for every adventure. Quality, performance, and style.</p>
+                            <p>2/177, Gandhi Street, Nazarethpet,<br />Chennai – 600 123, India</p>
                         </div>
                         <div>
                             <h5 style={{ color: 'white', marginBottom: 'var(--spacing-md)' }}>Shop</h5>
@@ -115,8 +48,9 @@ const MainLayout = () => {
                         </div>
                         <div>
                             <h5 style={{ color: 'white', marginBottom: 'var(--spacing-md)' }}>Contact</h5>
-                            <p>📧 support@sonica.com</p>
-                            <p>📞 +91 98765 43210</p>
+                            <p>📧 ssquaretestingmachine@gmail.com</p>
+                            <p>📞 +91 98413 94925</p>
+                            <p>📞 +91 99620 02826</p>
                         </div>
                     </div>
                     <div style={{
@@ -124,7 +58,7 @@ const MainLayout = () => {
                         paddingTop: 'var(--spacing-lg)',
                         textAlign: 'center'
                     }}>
-                        <p>© 2026 Sonica Bicycles. All rights reserved.</p>
+                        <p>© 2026 SS Square Industries. All rights reserved.</p>
                     </div>
                 </div>
             </footer>

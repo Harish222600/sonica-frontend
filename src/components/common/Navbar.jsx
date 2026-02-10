@@ -1,0 +1,110 @@
+import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import { useCart } from '../../context/CartContext';
+import { FiShoppingCart, FiUser, FiLogOut, FiMenu } from 'react-icons/fi';
+import { useState } from 'react';
+
+const Navbar = () => {
+    const { user, logout, isAuthenticated } = useAuth();
+    const { itemCount } = useCart();
+    const location = useLocation();
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+    const isActive = (path) => location.pathname === path;
+
+    return (
+        <nav className="navbar">
+            <div className="container navbar-content">
+                <Link to="/" className="navbar-logo">
+                    🚴 <span>SS Square</span>
+                </Link>
+
+                <ul className="navbar-nav">
+                    {user?.role !== 'delivery_partner' && (
+                        <>
+                            <li>
+                                <Link to="/" className={`navbar-link ${isActive('/') ? 'active' : ''}`}>
+                                    Home
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/products" className={`navbar-link ${isActive('/products') ? 'active' : ''}`}>
+                                    Bicycles
+                                </Link>
+                            </li>
+                        </>
+                    )}
+
+                    {isAuthenticated && (
+                        <>
+                            {user?.role === 'admin' && (
+                                <li>
+                                    <Link to="/admin" className={`navbar-link ${isActive('/admin') ? 'active' : ''}`}>
+                                        Admin Dashboard
+                                    </Link>
+                                </li>
+                            )}
+                            {user?.role === 'inventory_manager' && (
+                                <li>
+                                    <Link to="/inventory" className={`navbar-link ${isActive('/inventory') ? 'active' : ''}`}>
+                                        Inventory Dashboard
+                                    </Link>
+                                </li>
+                            )}
+                            {user?.role === 'delivery_partner' && (
+                                <li>
+                                    <Link to="/delivery" className={`navbar-link ${isActive('/delivery') ? 'active' : ''}`}>
+                                        Delivery Dashboard
+                                    </Link>
+                                </li>
+                            )}
+                            {user?.role === 'customer' && (
+                                <li>
+                                    <Link to="/orders" className={`navbar-link ${isActive('/orders') ? 'active' : ''}`}>
+                                        My Orders
+                                    </Link>
+                                </li>
+                            )}
+                        </>
+                    )}
+                </ul>
+
+                <div className="navbar-actions">
+                    {isAuthenticated ? (
+                        <>
+                            {user?.role === 'customer' && (
+                                <Link to="/cart" className="btn btn-ghost btn-icon cart-icon">
+                                    <FiShoppingCart size={20} />
+                                    {itemCount > 0 && <span className="cart-badge">{itemCount}</span>}
+                                </Link>
+                            )}
+
+                            <Link to="/profile" className="btn btn-ghost btn-icon">
+                                <FiUser size={20} />
+                            </Link>
+
+                            <button onClick={logout} className="btn btn-ghost btn-icon">
+                                <FiLogOut size={20} />
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <Link to="/login" className="btn btn-ghost">Login</Link>
+                            <Link to="/register" className="btn btn-primary">Sign Up</Link>
+                        </>
+                    )}
+
+                    <button
+                        className="btn btn-ghost btn-icon"
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                        style={{ display: 'none' }}
+                    >
+                        <FiMenu size={20} />
+                    </button>
+                </div>
+            </div>
+        </nav>
+    );
+};
+
+export default Navbar;

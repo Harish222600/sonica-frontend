@@ -85,6 +85,18 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const uploadAvatar = async (formData) => {
+        try {
+            const response = await api.post('/upload/avatar', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            setUser(response.data.data.user);
+            return response.data.data;
+        } catch (err) {
+            throw err;
+        }
+    };
+
     const value = {
         user,
         loading,
@@ -92,7 +104,9 @@ export const AuthProvider = ({ children }) => {
         login,
         register,
         logout,
+        logout,
         updateProfile,
+        uploadAvatar,
         isAuthenticated: !!user,
         isAdmin: user?.role === 'admin',
         isInventoryManager: user?.role === 'inventory_manager',

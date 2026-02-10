@@ -32,6 +32,15 @@ api.interceptors.response.use(
 
 export default api;
 
+// Auth API
+export const authAPI = {
+    getProfile: () => api.get('/auth/profile'),
+    updateProfile: (data) => api.put('/auth/profile', data),
+    uploadAvatar: (formData) => api.post('/upload/avatar', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+    })
+};
+
 // Product API
 export const productAPI = {
     getAll: (params) => api.get('/products', { params }),

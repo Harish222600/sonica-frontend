@@ -59,14 +59,14 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
 
   if (allowedRoles.length > 0 && !allowedRoles.includes(user?.role)) {
     // Redirect to appropriate dashboard based on role
+    // Redirect to appropriate dashboard based on role
     switch (user?.role) {
-      case 'admin':
-        return <Navigate to="/admin" replace />;
-      case 'inventory_manager':
-        return <Navigate to="/inventory" replace />;
       case 'delivery_partner':
         return <Navigate to="/delivery" replace />;
       default:
+        // For admin/inventory trying to access customer routes, we might want to allow it
+        // based on the previous request "admin and inventory shoud also see the home"
+        // So effectively, we only strictly redirect delivery partners.
         return <Navigate to="/" replace />;
     }
   }
@@ -89,12 +89,10 @@ const GuestRoute = ({ children }) => {
   if (isAuthenticated) {
     // Redirect to appropriate dashboard based on role
     switch (user?.role) {
-      case 'admin':
-        return <Navigate to="/admin" replace />;
-      case 'inventory_manager':
-        return <Navigate to="/inventory" replace />;
       case 'delivery_partner':
         return <Navigate to="/delivery" replace />;
+      case 'admin':
+      case 'inventory_manager':
       default:
         return <Navigate to="/" replace />;
     }
@@ -103,14 +101,37 @@ const GuestRoute = ({ children }) => {
   return children;
 };
 
+// Store Access Route (Block Delivery Partners)
+const StoreAccessRoute = ({ children }) => {
+  const { user, isAuthenticated } = useAuth();
+
+  if (isAuthenticated && user?.role === 'delivery_partner') {
+    return <Navigate to="/delivery" replace />;
+  }
+
+  return children;
+};
+
 function AppRoutes() {
   return (
     <Routes>
-      {/* Public Routes */}
+      {/* Public Routes (Store Access) */}
       <Route element={<MainLayout />}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/products" element={<ProductsPage />} />
-        <Route path="/products/:id" element={<ProductDetailPage />} />
+        <Route path="/" element={
+          <StoreAccessRoute>
+            <HomePage />
+          </StoreAccessRoute>
+        } />
+        <Route path="/products" element={
+          <StoreAccessRoute>
+            <ProductsPage />
+          </StoreAccessRoute>
+        } />
+        <Route path="/products/:id" element={
+          <StoreAccessRoute>
+            <ProductDetailPage />
+          </StoreAccessRoute>
+        } />
       </Route>
 
       {/* Auth Routes */}
@@ -135,6 +156,14 @@ function AppRoutes() {
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/orders" element={<OrdersPage />} />
         <Route path="/orders/:id" element={<OrderDetailPage />} />
+      </Route>
+
+      {/* General Protected Routes (All Authenticated Users) */}
+      <Route element={
+        <ProtectedRoute>
+          <MainLayout />
+        </ProtectedRoute>
+      }>
         <Route path="/profile" element={<ProfilePage />} />
       </Route>
 
