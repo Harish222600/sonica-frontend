@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { productAPI, reviewAPI } from '../../services/api';
+import toast from 'react-hot-toast';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 import { FiStar, FiShoppingCart, FiCheck, FiMinus, FiPlus, FiTruck, FiShield, FiArrowLeft } from 'react-icons/fi';
@@ -51,11 +52,13 @@ const ProductDetailPage = () => {
 
         setAddingToCart(true);
         try {
-            await addToCart(id, quantity);
+            console.log('Adding to cart:', product._id, quantity);
+            await addToCart(product._id, quantity);
+            toast.success('Added to cart successfully!');
             setAddedToCart(true);
             setTimeout(() => setAddedToCart(false), 2000);
         } catch (error) {
-            alert(error.response?.data?.message || 'Failed to add to cart');
+            toast.error(error.response?.data?.message || 'Failed to add to cart');
         } finally {
             setAddingToCart(false);
         }

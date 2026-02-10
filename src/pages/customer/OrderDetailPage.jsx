@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useSearchParams, Link } from 'react-router-dom';
 import { orderAPI } from '../../services/api';
 import { FiPackage, FiCheck, FiTruck, FiArrowLeft, FiX } from 'react-icons/fi';
+import InvoiceButton from '../../components/common/InvoiceButton';
 
 const OrderDetailPage = () => {
     const { id } = useParams();
@@ -68,17 +69,26 @@ const OrderDetailPage = () => {
                     background: 'linear-gradient(135deg, var(--success-500) 0%, var(--success-600) 100%)',
                     color: 'white',
                     marginBottom: 'var(--spacing-xl)',
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    padding: 'var(--spacing-xl)'
                 }}>
                     <div style={{ fontSize: '3rem', marginBottom: 'var(--spacing-md)' }}>🎉</div>
-                    <h2 style={{ color: 'white' }}>Order Placed Successfully!</h2>
-                    <p style={{ opacity: 0.9 }}>Thank you for your purchase. Your order is being processed.</p>
+                    <h2 style={{ color: 'white', marginBottom: 'var(--spacing-md)' }}>Order Placed Successfully!</h2>
+                    <p style={{ opacity: 0.9, marginBottom: 'var(--spacing-lg)' }}>Thank you for your purchase. Your order is being processed.</p>
+                    <InvoiceButton
+                        order={order}
+                        className="btn-white"
+                        buttonStyle={{ color: 'var(--success-600)', background: 'white', border: 'none' }}
+                    />
                 </div>
             )}
 
-            <Link to="/orders" className="btn btn-ghost" style={{ marginBottom: 'var(--spacing-lg)' }}>
-                <FiArrowLeft /> Back to Orders
-            </Link>
+            <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-lg)' }}>
+                <Link to="/orders" className="btn btn-ghost">
+                    <FiArrowLeft /> Back to Orders
+                </Link>
+                {!isSuccess && <InvoiceButton order={order} />}
+            </div>
 
             <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-xl)' }}>
                 <div>

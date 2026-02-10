@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 
@@ -214,6 +215,7 @@ function App() {
     <Router>
       <AuthProvider>
         <CartProvider>
+          <Toaster position="top-center" reverseOrder={false} />
           <AppRoutes />
         </CartProvider>
       </AuthProvider>

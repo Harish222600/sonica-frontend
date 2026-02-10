@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { adminAPI } from '../../services/api';
 import { FiPlus, FiEdit2, FiSearch, FiX, FiCheck, FiUser } from 'react-icons/fi';
 
@@ -57,8 +58,9 @@ const AdminUsers = () => {
             }
             setShowModal(false);
             fetchUsers();
+            toast.success(editingUser ? 'User updated successfully' : 'User created successfully');
         } catch (error) {
-            alert(error.response?.data?.message || 'Failed to save user');
+            toast.error(error.response?.data?.message || 'Failed to save user');
         } finally {
             setSaving(false);
         }
@@ -166,8 +168,8 @@ const AdminUsers = () => {
                                     </td>
                                     <td>
                                         <span className={`badge ${user.role === 'admin' ? 'badge-primary' :
-                                                user.role === 'inventory_manager' ? 'badge-warning' :
-                                                    user.role === 'delivery_partner' ? 'badge-success' : 'badge-secondary'
+                                            user.role === 'inventory_manager' ? 'badge-warning' :
+                                                user.role === 'delivery_partner' ? 'badge-success' : 'badge-secondary'
                                             }`}>
                                             {user.role.replace('_', ' ')}
                                         </span>

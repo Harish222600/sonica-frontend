@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 import { orderAPI, paymentAPI } from '../../services/api';
@@ -69,9 +70,10 @@ const CheckoutPage = () => {
                         });
 
                         await clearCart();
+                        toast.success('Payment successful! Order placed.');
                         navigate(`/orders/${order._id}?success=true`);
                     } catch (error) {
-                        alert('Payment verification failed. Please contact support.');
+                        toast.error('Payment verification failed. Please contact support.');
                     }
                 },
                 prefill: {
@@ -81,13 +83,14 @@ const CheckoutPage = () => {
                 },
                 theme: {
                     color: '#f97316'
-                }
+                },
+                image: 'https://cdn.razorpay.com/logos/GhRQcyean79PqE_medium.png', // Public placeholder to prevent CORS/mixed content issues with localhost
             };
 
             const razorpay = new window.Razorpay(options);
             razorpay.open();
         } catch (error) {
-            alert(error.response?.data?.message || 'Failed to process payment');
+            toast.error(error.response?.data?.message || 'Failed to process payment');
         } finally {
             setLoading(false);
         }

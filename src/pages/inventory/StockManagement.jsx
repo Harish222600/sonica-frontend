@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { inventoryAPI } from '../../services/api';
+import toast from 'react-hot-toast';
 import { FiSearch, FiPlus, FiMinus, FiX } from 'react-icons/fi';
 
 const StockManagement = () => {
@@ -56,8 +57,9 @@ const StockManagement = () => {
             }
             setShowModal(false);
             fetchInventory();
+            toast.success(modalType === 'add' ? 'Stock added successfully' : 'Stock removed successfully');
         } catch (error) {
-            alert(error.response?.data?.message || 'Failed to update stock');
+            toast.error(error.response?.data?.message || 'Failed to update stock');
         } finally {
             setSaving(false);
         }

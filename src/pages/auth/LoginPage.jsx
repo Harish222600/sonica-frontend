@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { useAuth } from '../../context/AuthContext';
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
 
@@ -20,6 +21,7 @@ const LoginPage = () => {
 
         try {
             const user = await login(email, password);
+            toast.success('Login successful!');
 
             // Redirect based on role
             if (user.role === 'delivery_partner') {
@@ -29,7 +31,9 @@ const LoginPage = () => {
                 navigate('/');
             }
         } catch (err) {
-            setError(err.response?.data?.message || 'Login failed. Please try again.');
+            const errorMessage = err.response?.data?.message || 'Login failed. Please try again.';
+            setError(errorMessage);
+            toast.error(errorMessage);
         } finally {
             setLoading(false);
         }

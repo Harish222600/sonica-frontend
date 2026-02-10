@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { adminAPI, productAPI } from '../../services/api';
 import { FiPlus, FiEdit2, FiTrash2, FiSearch, FiImage, FiX } from 'react-icons/fi';
 
@@ -19,6 +20,7 @@ const AdminProducts = () => {
         specifications: {}
     });
     const [images, setImages] = useState([]);
+    const [existingImages, setExistingImages] = useState([]);
     const [saving, setSaving] = useState(false);
 
     const categories = ['mountain', 'road', 'electric', 'hybrid', 'kids', 'accessories'];
@@ -42,6 +44,7 @@ const AdminProducts = () => {
     const openModal = (product = null) => {
         if (product) {
             setEditingProduct(product);
+            setExistingImages(product.images || []);
             setFormData({
                 name: product.name,
                 description: product.description,
@@ -54,6 +57,7 @@ const AdminProducts = () => {
             });
         } else {
             setEditingProduct(null);
+            setExistingImages([]);
             setFormData({
                 name: '',
                 description: '',
@@ -76,6 +80,7 @@ const AdminProducts = () => {
         try {
             const form = new FormData();
             form.append('data', JSON.stringify(formData));
+            form.append('keepImages', JSON.stringify(existingImages));
             images.forEach((img) => form.append('images', img));
 
             if (editingProduct) {
@@ -86,8 +91,9 @@ const AdminProducts = () => {
 
             setShowModal(false);
             fetchProducts();
+            toast.success(editingProduct ? 'Product updated successfully' : 'Product created successfully');
         } catch (error) {
-            alert(error.response?.data?.message || 'Failed to save product');
+            toast.error(error.response?.data?.message || 'Failed to save product');
         } finally {
             setSaving(false);
         }
@@ -99,8 +105,9 @@ const AdminProducts = () => {
         try {
             await adminAPI.deleteProduct(id);
             fetchProducts();
+            toast.success('Product deleted successfully');
         } catch (error) {
-            alert(error.response?.data?.message || 'Failed to delete product');
+            toast.error(error.response?.data?.message || 'Failed to delete product');
         }
     };
 
@@ -311,6 +318,45 @@ const AdminProducts = () => {
                                         Select up to 5 images
                                     </p>
                                 </div>
+
+                                {existingImages.length > 0 && (
+                                    <div className="form-group">
+                                        <label className="form-label">Current Images</label>
+                                        <div className="flex gap-md wrap">
+                                            {existingImages.map((img, index) => (
+                                                <div key={index} style={{ position: 'relative', width: 80, height: 80 }}>
+                                                    <img
+                                                        src={img}
+                                                        alt={`Product ${index + 1}`}
+                                                        style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'var(--radius-md)' }}
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setExistingImages(existingImages.filter((_, i) => i !== index))}
+                                                        style={{
+                                                            position: 'absolute',
+                                                            top: -5,
+                                                            right: -5,
+                                                            background: 'var(--error-500)',
+                                                            color: 'white',
+                                                            border: 'none',
+                                                            borderRadius: '50%',
+                                                            width: 20,
+                                                            height: 20,
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            cursor: 'pointer',
+                                                            fontSize: '12px'
+                                                        }}
+                                                    >
+                                                        <FiX />
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-ghost" onClick={() => setShowModal(false)}>

@@ -41,6 +41,7 @@ export const CartProvider = ({ children }) => {
         try {
             setLoading(true);
             const response = await api.post('/cart/add', { productId, quantity });
+            console.log('AddToCart Response:', response.data);
             setCart(response.data.data);
             return response.data.data;
         } catch (err) {

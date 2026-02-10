@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { deliveryAPI } from '../../services/api';
 import { FiArrowLeft, FiMapPin, FiPhone, FiUser, FiPackage, FiCheck } from 'react-icons/fi';
 
@@ -31,9 +32,10 @@ const DeliveryDetail = () => {
         setUpdating(true);
         try {
             await deliveryAPI.updateStatus(id, { status: newStatus });
+            toast.success(`Status updated to ${newStatus.replace('_', ' ')}`);
             fetchDelivery();
         } catch (error) {
-            alert(error.response?.data?.message || 'Failed to update status');
+            toast.error(error.response?.data?.message || 'Failed to update status');
         } finally {
             setUpdating(false);
         }
@@ -57,9 +59,10 @@ const DeliveryDetail = () => {
                 actualDeliveryDate: new Date().toISOString()
             });
             setPodModalOpen(false);
+            toast.success('Delivery confirmed successfully');
             fetchDelivery();
         } catch (error) {
-            alert(error.response?.data?.message || 'Failed to confirm delivery');
+            toast.error(error.response?.data?.message || 'Failed to confirm delivery');
         } finally {
             setUpdating(false);
         }

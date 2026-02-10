@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { orderAPI } from '../../services/api';
 import { FiPackage, FiTruck, FiCheck, FiChevronRight, FiStar } from 'react-icons/fi';
 import ReviewModal from '../../components/common/ReviewModal';
+import InvoiceButton from '../../components/common/InvoiceButton';
 
 const OrdersPage = () => {
     const [orders, setOrders] = useState([]);
@@ -169,15 +170,17 @@ const OrdersPage = () => {
                             {order.items.length} item{order.items.length > 1 ? 's' : ''} • <span style={{ fontWeight: 700, color: 'var(--primary-600)' }}>₹{order.totalAmount.toLocaleString()}</span>
                         </span>
 
-                        {['delivered', 'completed'].includes(order.status) && (
-                            <button
-                                className="btn btn-outline btn-sm flex items-center gap-xs"
-                                onClick={(e) => handleRateOrder(e, order)}
-                                style={{ zIndex: 10 }}
-                            >
-                                <FiStar /> Rate Order
-                            </button>
-                        )}
+                        <div className="flex gap-sm" onClick={(e) => e.stopPropagation()}>
+                            <InvoiceButton order={order} className="btn-sm btn-outline" />
+                            {['delivered', 'completed'].includes(order.status) && (
+                                <button
+                                    className="btn btn-outline btn-sm flex items-center gap-xs"
+                                    onClick={(e) => handleRateOrder(e, order)}
+                                >
+                                    <FiStar /> Rate Order
+                                </button>
+                            )}
+                        </div>
                     </div>
                 </div>
             ))}

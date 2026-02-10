@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { adminAPI, deliveryAPI } from '../../services/api';
-import { FiSearch, FiEye, FiTruck } from 'react-icons/fi';
+import { FiSearch, FiEye, FiTruck, FiDownload } from 'react-icons/fi';
+import InvoiceButton from '../../components/common/InvoiceButton';
 
 const AdminOrders = () => {
     const [orders, setOrders] = useState([]);
@@ -57,9 +59,9 @@ const AdminOrders = () => {
             await deliveryAPI.assign(assignData);
             setAssignModalOpen(false);
             fetchOrders(); // Refresh list
-            alert('Delivery assigned successfully');
+            toast.success('Delivery assigned successfully');
         } catch (error) {
-            alert(error.response?.data?.message || 'Failed to assign delivery');
+            toast.error(error.response?.data?.message || 'Failed to assign delivery');
         } finally {
             setAssigning(false);
         }
@@ -175,6 +177,13 @@ const AdminOrders = () => {
                                             >
                                                 <FiEye />
                                             </button>
+                                            <InvoiceButton
+                                                order={order}
+                                                className="btn btn-ghost btn-icon btn-sm"
+                                                title="Download Invoice"
+                                            >
+                                                <FiDownload />
+                                            </InvoiceButton>
                                             <button
                                                 className="btn btn-ghost btn-icon btn-sm"
                                                 onClick={() => openAssignModal(order)}
@@ -197,7 +206,10 @@ const AdminOrders = () => {
                 <div className="modal-overlay" onClick={() => setSelectedOrder(null)}>
                     <div className="modal" style={{ maxWidth: 700 }} onClick={(e) => e.stopPropagation()}>
                         <div className="modal-header">
-                            <h3>Order #{selectedOrder.orderNumber}</h3>
+                            <div className="flex gap-md items-center">
+                                <h3>Order #{selectedOrder.orderNumber}</h3>
+                                <InvoiceButton order={selectedOrder} className="btn-sm btn-outline" />
+                            </div>
                             <button className="btn btn-ghost btn-icon" onClick={() => setSelectedOrder(null)}>×</button>
                         </div>
                         <div className="modal-body">

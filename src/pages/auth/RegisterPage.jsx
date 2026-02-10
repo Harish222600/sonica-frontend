@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { useAuth } from '../../context/AuthContext';
 import { FiUser, FiMail, FiLock, FiPhone, FiEye, FiEyeOff } from 'react-icons/fi';
 
@@ -27,12 +28,16 @@ const RegisterPage = () => {
         setError('');
 
         if (formData.password !== formData.confirmPassword) {
-            setError('Passwords do not match');
+            const msg = 'Passwords do not match';
+            setError(msg);
+            toast.error(msg);
             return;
         }
 
         if (formData.password.length < 6) {
-            setError('Password must be at least 6 characters');
+            const msg = 'Password must be at least 6 characters';
+            setError(msg);
+            toast.error(msg);
             return;
         }
 
@@ -45,9 +50,12 @@ const RegisterPage = () => {
                 phone: formData.phone,
                 password: formData.password
             });
+            toast.success('Account created successfully!');
             navigate('/');
         } catch (err) {
-            setError(err.response?.data?.message || 'Registration failed. Please try again.');
+            const errorMessage = err.response?.data?.message || 'Registration failed. Please try again.';
+            setError(errorMessage);
+            toast.error(errorMessage);
         } finally {
             setLoading(false);
         }

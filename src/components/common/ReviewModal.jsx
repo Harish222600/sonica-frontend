@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FiStar, FiX } from 'react-icons/fi';
 import { FaStar } from 'react-icons/fa';
+import toast from 'react-hot-toast';
 import { reviewAPI } from '../../services/api';
 
 const ReviewModal = ({ isOpen, onClose, order, onSuccess }) => {
@@ -72,19 +73,20 @@ const ReviewModal = ({ isOpen, onClose, order, onSuccess }) => {
                 const errorMessages = rejected.map(r => r.reason.response?.data?.message || r.reason.message || 'Unknown error').join(', ');
 
                 if (fulfilled.length > 0) {
-                    alert(`Some reviews were submitted successfully, but others failed: ${errorMessages}`);
+                    toast.success(`Some reviews submitted, failures: ${errorMessages}`);
                     if (onSuccess) onSuccess();
                     onClose();
                 } else {
-                    alert(`Failed to submit reviews: ${errorMessages}`);
+                    toast.error(`Failed to submit reviews: ${errorMessages}`);
                 }
             } else {
+                toast.success('Review submitted successfully!');
                 if (onSuccess) onSuccess();
                 onClose();
             }
         } catch (error) {
             console.error('Unexpected error during review submission:', error);
-            alert('An unexpected error occurred. Please try again.');
+            toast.error('An unexpected error occurred. Please try again.');
         } finally {
             setSubmitting(false);
         }
