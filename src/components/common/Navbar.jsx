@@ -16,7 +16,8 @@ const Navbar = () => {
         <nav className="navbar">
             <div className="container navbar-content">
                 <Link to="/" className="navbar-logo">
-                    🚴 <span>SS Square</span>
+                    <img src="/logo.svg" alt="SS Square Logo" style={{ height: '40px', width: '40px', marginRight: '10px' }} />
+                    <span>SS Square</span>
                 </Link>
 
                 <ul className="navbar-nav">
