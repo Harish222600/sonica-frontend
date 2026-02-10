@@ -93,8 +93,7 @@ const CheckoutPage = () => {
         }
     };
 
-    const shippingCost = cart.totalAmount >= 10000 ? 0 : 500;
-    const total = cart.totalAmount + shippingCost;
+    const total = cart.totalAmount;
 
     return (
         <div className="page container">
@@ -250,7 +249,7 @@ const CheckoutPage = () => {
                                 onClick={handlePayment}
                                 disabled={loading}
                             >
-                                {loading ? 'Processing...' : `Pay ₹${total.toLocaleString()}`}
+                                {loading ? 'Processing...' : `Pay ₹${cart.totalAmount.toLocaleString()}`}
                             </button>
                         </div>
                     )}
@@ -281,12 +280,12 @@ const CheckoutPage = () => {
                         <div style={{ borderTop: '1px solid var(--gray-100)', paddingTop: 'var(--spacing-md)' }}>
                             <div className="flex justify-between" style={{ marginBottom: 'var(--spacing-sm)' }}>
                                 <span style={{ color: 'var(--gray-500)' }}>Subtotal</span>
-                                <span>₹{cart.totalAmount.toLocaleString()}</span>
+                                <span>₹{cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0).toLocaleString()}</span>
                             </div>
                             <div className="flex justify-between" style={{ marginBottom: 'var(--spacing-sm)' }}>
                                 <span style={{ color: 'var(--gray-500)' }}>Shipping</span>
-                                <span style={{ color: shippingCost === 0 ? 'var(--success-600)' : 'inherit' }}>
-                                    {shippingCost === 0 ? 'FREE' : `₹${shippingCost}`}
+                                <span style={{ color: 'var(--success-600)' }}>
+                                    ₹{cart.items.reduce((sum, item) => sum + ((item.shippingFees || 0) * item.quantity), 0).toLocaleString()}
                                 </span>
                             </div>
                             <div className="flex justify-between" style={{
@@ -296,7 +295,7 @@ const CheckoutPage = () => {
                             }}>
                                 <span style={{ fontWeight: 700, fontSize: '1.1rem' }}>Total</span>
                                 <span style={{ fontWeight: 700, fontSize: '1.25rem', color: 'var(--primary-600)' }}>
-                                    ₹{total.toLocaleString()}
+                                    ₹{cart.totalAmount.toLocaleString()}
                                 </span>
                             </div>
                         </div>

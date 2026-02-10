@@ -110,19 +110,14 @@ const CartPage = () => {
                         <div style={{ marginBottom: 'var(--spacing-lg)' }}>
                             <div className="flex justify-between" style={{ marginBottom: 'var(--spacing-sm)' }}>
                                 <span style={{ color: 'var(--gray-500)' }}>Subtotal ({cart.items.reduce((sum, item) => sum + item.quantity, 0)} items)</span>
-                                <span>₹{cart.totalAmount.toLocaleString()}</span>
+                                <span>₹{cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0).toLocaleString()}</span>
                             </div>
                             <div className="flex justify-between" style={{ marginBottom: 'var(--spacing-sm)' }}>
                                 <span style={{ color: 'var(--gray-500)' }}>Shipping</span>
                                 <span style={{ color: 'var(--success-600)' }}>
-                                    {cart.totalAmount >= 10000 ? 'FREE' : '₹500'}
+                                    ₹{cart.items.reduce((sum, item) => sum + ((item.shippingFees || 0) * item.quantity), 0).toLocaleString()}
                                 </span>
                             </div>
-                            {cart.totalAmount < 10000 && (
-                                <p style={{ fontSize: '0.85rem', color: 'var(--primary-600)', marginTop: 'var(--spacing-sm)' }}>
-                                    Add ₹{(10000 - cart.totalAmount).toLocaleString()} more for free shipping!
-                                </p>
-                            )}
                         </div>
 
                         <div className="flex justify-between" style={{
@@ -132,7 +127,7 @@ const CartPage = () => {
                         }}>
                             <span style={{ fontWeight: 700, fontSize: '1.1rem' }}>Total</span>
                             <span style={{ fontWeight: 700, fontSize: '1.25rem', color: 'var(--primary-600)' }}>
-                                ₹{(cart.totalAmount + (cart.totalAmount >= 10000 ? 0 : 500)).toLocaleString()}
+                                ₹{cart.totalAmount.toLocaleString()}
                             </span>
                         </div>
 

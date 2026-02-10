@@ -14,6 +14,7 @@ const AdminProducts = () => {
         category: 'mountain',
         price: '',
         discountPrice: '',
+        shippingFees: 0,
         stock: '',
         specifications: {}
     });
@@ -47,6 +48,7 @@ const AdminProducts = () => {
                 category: product.category,
                 price: product.price,
                 discountPrice: product.discountPrice || '',
+                shippingFees: product.shippingFees || 0,
                 stock: product.stock,
                 specifications: product.specifications || {}
             });
@@ -58,6 +60,7 @@ const AdminProducts = () => {
                 category: 'mountain',
                 price: '',
                 discountPrice: '',
+                shippingFees: 0,
                 stock: '',
                 specifications: {}
             });
@@ -281,6 +284,16 @@ const AdminProducts = () => {
                                             value={formData.discountPrice}
                                             onChange={(e) => setFormData({ ...formData, discountPrice: e.target.value })}
                                             placeholder="Optional"
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">Shipping Fees (₹)</label>
+                                        <input
+                                            type="number"
+                                            className="form-input"
+                                            value={formData.shippingFees}
+                                            onChange={(e) => setFormData({ ...formData, shippingFees: e.target.value })}
+                                            min="0"
                                         />
                                     </div>
                                 </div>
