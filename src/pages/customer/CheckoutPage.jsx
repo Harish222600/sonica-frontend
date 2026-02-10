@@ -57,7 +57,7 @@ const CheckoutPage = () => {
                 currency: razorpayOrder.currency,
                 name: 'Sonica Bicycles',
                 description: `Order #${order.orderNumber}`,
-                order_id: razorpayOrder.id,
+                order_id: razorpayOrder.orderId,
                 handler: async (response) => {
                     try {
                         // Verify payment
