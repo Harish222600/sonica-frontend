@@ -143,7 +143,7 @@ const HomePage = () => {
                                 background: 'rgba(249, 115, 22, 0.2)',
                                 border: '1px solid var(--primary-500)'
                             }}>
-                                <FiZap /> New 2024 Collection Available
+                                <FiZap /> New 2026 Collection Available
                             </span>
                             <h1 className="hero-title" style={{ color: 'white' }}>
                                 Ride Into <span className="gradient-text">Adventure</span> <br />
